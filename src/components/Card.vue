@@ -21,7 +21,9 @@
     v-else
     class="card flipped"
     :style="{ transform: `rotate(${(Math.random() - 0.5) * 2}deg` }"
-  ></article>
+  >
+    <img src="@/assets/logo.svg" alt="Aces Up Logo" />
+  </article>
 </template>
 
 <script>
@@ -68,14 +70,35 @@ export default {
   position: absolute;
   width: 100%;
 
+  img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+
   @media screen and (max-width: 650px) {
-    border: 0.2rem solid #fff;
+    border: 0.3rem solid #fff;
     font-size: 0.8rem;
     padding: 0.5rem;
+    min-width: 8.5rem;
   }
 
   &.flipped {
     background-color: #343478;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 6rem;
+      margin-bottom: 2rem;
+
+      @media screen and (max-width: 650px) {
+        width: 4rem;
+      }
+    }
   }
 
   .upper-left,
@@ -84,7 +107,7 @@ export default {
       width: 1.5rem;
 
       @media screen and (max-width: 650px) {
-        width: 1rem;
+        width: 1.1rem;
       }
     }
   }
@@ -102,7 +125,7 @@ export default {
       width: 2.5rem;
 
       @media screen and (max-width: 650px) {
-        width: 1.5rem;
+        width: 1.7rem;
       }
     }
   }

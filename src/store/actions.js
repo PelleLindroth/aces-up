@@ -1,4 +1,64 @@
 export default {
+  checkGameOver: ({ dispatch, getters }) => {
+    let game = true
+    let currentFour = getters.getCurrentFour
+    let deck = getters.getDeck
+
+    if (deck.length) {
+      game = false
+      currentFour.forEach(card => {
+        if (card && card.value != 14) {
+          game = true
+        } else if (!card) {
+          game = true
+        } else {
+          if (deck.length) {
+            game = true
+          }
+        }
+      })
+    } else {
+      let suits = []
+      currentFour.forEach(card => {
+        if (card) {
+          suits.push(card.suit)
+        }
+      })
+      suits = [...new Set([...suits])]
+      if (suits.length > 3) {
+        game = false
+      }
+    }
+
+    if (!game) {
+      dispatch('endGame')
+    }
+  },
+  checkWin: ({ getters }) => {
+    const currentFour = getters.getCurrentFour
+    let win = true
+
+    currentFour.forEach(card => {
+      if (card && card.value != 14) {
+        win = false
+      }
+    })
+
+    if (getters.getStacksLength > 4 || getters.getDeck.length) {
+      win = false
+    }
+
+    return win
+  },
+  endGame: async ({ commit, dispatch }) => {
+    const win = await dispatch('checkWin')
+
+    if (win) {
+      commit('SET_WIN', true)
+    }
+    commit('SET_FIRST_GAME_FALSE')
+    commit('SET_GAME', false)
+  },
   deal: ({ commit }) => {
     commit('DEAL')
   },
@@ -18,6 +78,13 @@ export default {
         commit('UPDATE_STACK_4', state.stack4.slice(0, -1))
         break
     }
+  },
+  startGame: ({ dispatch, commit }) => {
+    commit('RESET_STACKS')
+    commit('CREATE_NEW_DECK')
+    dispatch('shuffleDeck')
+    commit('SET_WIN', false)
+    commit('SET_GAME', true)
   },
   shuffleDeck: ({ commit }) => {
     commit('SHUFFLE_DECK')

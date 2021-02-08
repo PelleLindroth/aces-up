@@ -12,6 +12,9 @@ export default new Vuex.Store({
   state: {
     currentFour: [],
     deck: deck,
+    firstGame: true,
+    game: false,
+    win: false,
     stack1: [],
     stack2: [],
     stack3: [],

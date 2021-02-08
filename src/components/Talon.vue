@@ -1,5 +1,9 @@
 <template>
-  <ul @click="deal" class="talon">
+  <ul
+    @click="deal"
+    :style="cardsInDeck ? { cursor: 'pointer' } : { cursor: 'default' }"
+    class="talon"
+  >
     <Card flipped v-for="card in cards" :key="card.id" :card="card" />
   </ul>
 </template>
@@ -10,13 +14,18 @@ export default {
   components: {
     Card,
   },
-  created() {
-    this.$store.dispatch('shuffleDeck')
+  computed: {
+    cardsInDeck() {
+      return this.$store.getters.getDeck.length > 0
+    },
   },
   methods: {
-    deal() {
-      this.$store.dispatch('deal')
-      this.$store.commit('SET_CURRENT_FOUR')
+    async deal() {
+      if (this.cardsInDeck) {
+        await this.$store.dispatch('deal')
+        this.$store.commit('SET_CURRENT_FOUR')
+        // this.$store.dispatch('checkGameOver')
+      }
     },
   },
   props: {
@@ -27,7 +36,6 @@ export default {
 
 <style lang="scss" scoped>
 .talon {
-  cursor: pointer;
   grid-column: 5 / span 2;
   grid-row: 4;
   position: relative;

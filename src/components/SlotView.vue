@@ -10,10 +10,10 @@
       <draggable
         v-else
         :disabled="disableDraggable"
+        :move="allowDrop"
         class="card-slot one"
         v-model="stack1"
         group="cards"
-        :move="allowDrop"
         @start="resetMarginTop"
       >
         <Card
@@ -125,6 +125,7 @@ export default {
       set(value) {
         this.$store.commit('UPDATE_STACK_1', value)
         this.$store.commit('SET_CURRENT_FOUR')
+        this.$store.dispatch('checkGameOver')
       },
     },
     stack2: {
@@ -134,6 +135,7 @@ export default {
       set(value) {
         this.$store.commit('UPDATE_STACK_2', value)
         this.$store.commit('SET_CURRENT_FOUR')
+        this.$store.dispatch('checkGameOver')
       },
     },
     stack3: {
@@ -143,6 +145,7 @@ export default {
       set(value) {
         this.$store.commit('UPDATE_STACK_3', value)
         this.$store.commit('SET_CURRENT_FOUR')
+        this.$store.dispatch('checkGameOver')
       },
     },
     stack4: {
@@ -152,21 +155,45 @@ export default {
       set(value) {
         this.$store.commit('UPDATE_STACK_4', value)
         this.$store.commit('SET_CURRENT_FOUR')
+        this.$store.dispatch('checkGameOver')
       },
     },
   },
   methods: {
+    allowDrop(e) {
+      let stackLength = 0
+
+      switch (e.from.classList[1]) {
+        case 'one':
+          stackLength = this.stack1.length
+          break
+        case 'two':
+          stackLength = this.stack2.length
+          break
+        case 'three':
+          stackLength = this.stack3.length
+          break
+        case 'four':
+          stackLength = this.stack4.length
+          break
+      }
+      return (
+        e.to.classList[1] == 'empty' &&
+        !(e.draggedContext.index < stackLength - 1)
+      )
+    },
+    checkWin() {
+      console.log('check win')
+    },
     discard(card, slot) {
       if (card.deletable) {
         this.$store.dispatch('deleteCard', { card, slot })
         this.$store.commit('SET_CURRENT_FOUR')
+        this.$store.dispatch('checkGameOver')
       }
     },
     resetMarginTop(e) {
       e.item.style.marginTop = 0
-    },
-    allowDrop(e) {
-      return e.to.classList[1] == 'empty'
     },
   },
   updated() {
@@ -181,6 +208,10 @@ export default {
   grid-row: 2;
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: 650px) {
+    grid-column: 2 / span 8;
+  }
 
   .slot-wrapper {
     height: 100%;

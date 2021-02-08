@@ -1,6 +1,9 @@
 import * as Deck from '../deck'
 
 export default {
+  CREATE_NEW_DECK: state => {
+    state.deck = Deck.createDeck()
+  },
   DEAL: (state) => {
     state.stack1.push(state.deck.pop())
     state.stack2.push(state.deck.pop())
@@ -9,6 +12,12 @@ export default {
   },
   DELETE_CARD: (state, deletable) => {
     state.deck = state.deck.filter(card => card.id !== deletable.id)
+  },
+  RESET_STACKS: state => {
+    state.stack1 = []
+    state.stack2 = []
+    state.stack3 = []
+    state.stack4 = []
   },
   SET_CURRENT_FOUR: (state) => {
     state.currentFour = []
@@ -27,6 +36,15 @@ export default {
         }
       }
     })
+  },
+  SET_FIRST_GAME_FALSE: state => {
+    state.firstGame = false
+  },
+  SET_GAME: (state, value) => {
+    state.game = value
+  },
+  SET_WIN: (state, value) => {
+    state.win = value
   },
   SHUFFLE_DECK: (state) => {
     state.deck = Deck.shuffleDeck(state.deck)
