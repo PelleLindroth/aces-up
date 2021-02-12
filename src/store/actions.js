@@ -11,10 +11,6 @@ export default {
           game = true
         } else if (!card) {
           game = true
-        } else {
-          if (deck.length) {
-            game = true
-          }
         }
       })
     } else {
