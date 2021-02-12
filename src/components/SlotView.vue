@@ -177,6 +177,15 @@ export default {
           stackLength = this.stack4.length
           break
       }
+      if (
+        e.to.classList[1] == 'empty' &&
+        !(e.draggedContext.index < stackLength - 1 && e.to != e.from)
+      ) {
+        e.dragged.style.opacity = 0
+      } else {
+        e.dragged.style.opacity = 1
+      }
+
       return (
         e.to.classList[1] == 'empty' &&
         !(e.draggedContext.index < stackLength - 1)
@@ -193,7 +202,9 @@ export default {
       }
     },
     resetMarginTop(e) {
-      e.item.style.marginTop = 0
+      if (e.to != e.from) {
+        e.item.style.marginTop = 0
+      }
     },
   },
   updated() {
@@ -206,11 +217,12 @@ export default {
 .slot-view {
   grid-column: 2 / span 8;
   grid-row: 2;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
 
   @media screen and (max-width: 650px) {
-    grid-column: 2 / span 8;
+    gap: 0.2rem;
   }
 
   .slot-wrapper {
@@ -223,7 +235,7 @@ export default {
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      width: 95%;
+      width: 100%;
       height: 100%;
     }
   }
