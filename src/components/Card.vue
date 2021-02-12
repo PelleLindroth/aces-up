@@ -68,7 +68,15 @@ export default {
   justify-content: space-between;
   padding: 1rem 0.5rem;
   position: absolute;
+  -webkit-tap-highlight-color: transparent;
   width: 100%;
+
+  @media screen and (max-width: 650px) {
+    border: 0.3rem solid #fff;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    width: 95%;
+  }
 
   img {
     user-select: none;
@@ -76,13 +84,6 @@ export default {
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-  }
-
-  @media screen and (max-width: 650px) {
-    border: 0.3rem solid #fff;
-    font-size: 0.8rem;
-    padding: 0.5rem;
-    min-width: 8.5rem;
   }
 
   &.flipped {
