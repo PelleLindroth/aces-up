@@ -60,6 +60,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  padding: 0.5rem;
 
   .modal-enter,
   .modal-leave-to {
@@ -80,6 +81,7 @@ body {
     gap: 1rem;
     grid-template-columns: auto repeat(8, 9.4%) auto;
     grid-template-rows: 1rem 12.5rem 80% 12.5rem;
+    padding: 0rem;
   }
 }
 </style>
