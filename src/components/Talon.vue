@@ -24,7 +24,7 @@ export default {
       if (this.cardsInDeck) {
         await this.$store.dispatch('deal')
         this.$store.commit('SET_CURRENT_FOUR')
-        // this.$store.dispatch('checkGameOver')
+        this.$store.dispatch('checkGameOver')
       }
     },
   },
@@ -39,5 +39,9 @@ export default {
   grid-column: 5 / span 2;
   grid-row: 4;
   position: relative;
+
+  @media screen and (max-width: 650px) {
+    margin-left: -0.5rem;
+  }
 }
 </style>
