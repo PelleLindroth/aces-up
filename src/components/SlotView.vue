@@ -12,6 +12,7 @@
         :disabled="disableDraggable"
         :move="allowDrop"
         class="card-slot one"
+        ghostClass="ghost"
         v-model="stack1"
         group="cards"
         @start="resetMarginTop"
@@ -36,6 +37,7 @@
         v-else
         :disabled="disableDraggable"
         class="card-slot two"
+        ghostClass="ghost"
         v-model="stack2"
         group="cards"
         :move="allowDrop"
@@ -62,6 +64,7 @@
         v-else
         :disabled="disableDraggable"
         class="card-slot three"
+        ghostClass="ghost"
         v-model="stack3"
         group="cards"
         :move="allowDrop"
@@ -88,6 +91,7 @@
         v-else
         :disabled="disableDraggable"
         class="card-slot four"
+        ghostClass="ghost"
         v-model="stack4"
         group="cards"
         :move="allowDrop"
@@ -237,6 +241,14 @@ export default {
       align-items: center;
       width: 100%;
       height: 100%;
+
+      .ghost {
+        display: none;
+      }
+
+      .sortable-chosen {
+        opacity: 1;
+      }
     }
   }
 }
